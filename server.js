@@ -28,9 +28,14 @@ app.get('/api/notes', (req, res) => {
 
 // post api/notes reads the existing database and adds the new entry
 app.post('/api/notes', (req, res) => {
-  console.log('Note Added');
-  console.log(req.body);
   const note = req.body;
+  const idNum =  Math.floor((Math.random()) * 1000000);
+  //  const idArray = { id : `${idNum}`};
+ // console.log(idArray);
+  //note.push(idArray);
+  note.id = `${idNum}`;
+  
+  console.log(note);
   fs.readFile('./db/db.json', 'utf8', (err, data) => {
     const notes = JSON.parse(data);
     notes.push(note);
