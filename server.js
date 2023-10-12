@@ -2,7 +2,6 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const noteData = require('./db/db.json');
-
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -28,21 +27,23 @@ app.get('/api/notes', (req, res) => {
 // post api/notes reads the existing database and adds the new entry
 app.post('/api/notes', (req, res) => {
   const note = req.body;
-  note.id =  Math.floor((Math.random()) * 1000000);
-  fs.readFile('./db/db.json', 'utf8', (err, data) => {
-    const notes = JSON.parse(data);
-    notes.push(note);
-    const updatedNotes = JSON.stringify(notes);
-    fs.writeFile('./db/db.json', updatedNotes, (err, data) =>
-    err ? console.error(err) : console.log('Note Saved')
-    );  
-  });
-  res.json('yes');
+  note.id =  Math.floor((Math.random()) * 1000000).toString();
+  noteData.push(note);
+  fs.writeFileSync("./db/db.json", JSON.stringify(noteData), function(err) {
+    if (err) throw (err);        
+  }); 
+  res.json(noteData); 
 });
 
-// app.delete('/api/notes', (req, res) => {
-//   console.log('')
-// })
+app.delete('/api/notes/:id', (req, res) => {
+  const deleteId = req.params.id;
+  const filteredData = noteData.filter((note) => note.id != deleteId);
+  console.log(filteredData);
+  fs.writeFileSync("./db/db.json", JSON.stringify(filteredData), function(err) {
+    if (err) throw (err);        
+  });
+  res.json(filteredData); 
+});
 
 app.listen(PORT, () =>
   console.log(`App listening at http://localhost:${PORT}`)
