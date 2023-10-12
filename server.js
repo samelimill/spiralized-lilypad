@@ -22,33 +22,27 @@ app.get('/notes', (req, res) =>
 
 // get api/notes returns existing database
 app.get('/api/notes', (req, res) => {
-  console.log(`${req.method} request received`);
   res.status(200).json(noteData);
 });
 
 // post api/notes reads the existing database and adds the new entry
 app.post('/api/notes', (req, res) => {
   const note = req.body;
-  const idNum =  Math.floor((Math.random()) * 1000000);
-  //  const idArray = { id : `${idNum}`};
- // console.log(idArray);
-  //note.push(idArray);
-  note.id = `${idNum}`;
-  
-  console.log(note);
+  note.id =  Math.floor((Math.random()) * 1000000);
   fs.readFile('./db/db.json', 'utf8', (err, data) => {
     const notes = JSON.parse(data);
     notes.push(note);
     const updatedNotes = JSON.stringify(notes);
     fs.writeFile('./db/db.json', updatedNotes, (err, data) =>
-    err ? console.error(err) : console.log('Notes updated')
-    )
+    err ? console.error(err) : console.log('Note Saved')
+    );  
   });
+  res.json('yes');
 });
 
-app.delete('/api/notes', (req, res) => {
-  console.log('')
-})
+// app.delete('/api/notes', (req, res) => {
+//   console.log('')
+// })
 
 app.listen(PORT, () =>
   console.log(`App listening at http://localhost:${PORT}`)
