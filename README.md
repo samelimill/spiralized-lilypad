@@ -1,7 +1,7 @@
 <h1 align="center" id="title">Note Taker</h1>
 <div align="center">
 
-![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/t/samelimill/amalgamated-skimmer)
+![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/t/samelimill/spiralized-lilypad)
 ![Node badge](https://img.shields.io/badge/node-yellow?logo=node.js)
 ![Express badge](https://img.shields.io/badge/express-green?logo=express)
 
